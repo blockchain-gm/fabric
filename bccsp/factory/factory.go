@@ -62,7 +62,7 @@ func GetDefault() bccsp.BCCSP {
 		bootBCCSPInitOnce.Do(func() {
 			var err error
 			// f := &SWFactory{}
-			f := &SMFactory{}
+			f := &GMFactory{}
 			bootBCCSP, err = f.Get(GetDefaultOpts())
 			if err != nil {
 				panic("BCCSP Internal error, failed initialization with GetDefaultOpts!")

@@ -6,9 +6,10 @@ SPDX-License-Identifier: Apache-2.0
 package handlers
 
 import (
+	// "crypto/ecdsa"
 	"crypto/elliptic"
 	"crypto/sha256"
-	"crypto/x509"
+	// "crypto/x509"
 	"encoding/pem"
 	"fmt"
 	"reflect"
@@ -81,7 +82,7 @@ func NewRevocationPublicKey(pubKey *sm2.PublicKey) *revocationPublicKey {
 // Bytes converts this key to its byte representation,
 // if this operation is allowed.
 func (k *revocationPublicKey) Bytes() (raw []byte, err error) {
-	raw, err = x509.MarshalPKIXPublicKey(k.pubKey)
+	raw, err = sm2.MarshalPKIXPublicKey(k.pubKey) //sm2
 	if err != nil {
 		return nil, fmt.Errorf("Failed marshalling key [%s]", err)
 	}
