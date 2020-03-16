@@ -274,6 +274,8 @@ func (ks *fileBasedKeyStore) searchKeystoreForSKI(ski []byte) (k bccsp.Key, err 
 		}
 
 		switch key.(type) {
+		case *sm2.PrivateKey:
+			k = &gmsm2PrivateKey{key.(*sm2.PrivateKey)}
 		case *ecdsa.PrivateKey:
 			k = &ecdsaPrivateKey{key.(*ecdsa.PrivateKey)}
 		case *rsa.PrivateKey:
