@@ -103,7 +103,8 @@ func GenerateLocalMSP(baseDir, name string, sans []string, signCA *ca.CA,
 	}
 
 	// generate config.yaml if required
-	if nodeOUs {
+	// if nodeOUs {
+	if nodeOUs && nodeType == PEER {
 
 		exportConfig(mspDir, filepath.Join("cacerts", x509Filename(signCA.Name)), true)
 	}
@@ -279,14 +280,14 @@ func exportConfig(mspDir, caFile string, enable bool) error {
 				Certificate:                  caFile,
 				OrganizationalUnitIdentifier: PEEROU,
 			},
-			AdminOUIdentifier: &fabricmsp.OrganizationalUnitIdentifiersConfiguration{
-				Certificate:                  caFile,
-				OrganizationalUnitIdentifier: ADMINOU,
-			},
-			OrdererOUIdentifier: &fabricmsp.OrganizationalUnitIdentifiersConfiguration{
-				Certificate:                  caFile,
-				OrganizationalUnitIdentifier: ORDEREROU,
-			},
+			// AdminOUIdentifier: &fabricmsp.OrganizationalUnitIdentifiersConfiguration{
+			// 	Certificate:                  caFile,
+			// 	OrganizationalUnitIdentifier: ADMINOU,
+			// },
+			// OrdererOUIdentifier: &fabricmsp.OrganizationalUnitIdentifiersConfiguration{
+			// 	Certificate:                  caFile,
+			// 	OrganizationalUnitIdentifier: ORDEREROU,
+			// },
 		},
 	}
 
