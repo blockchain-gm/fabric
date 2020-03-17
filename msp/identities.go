@@ -42,7 +42,7 @@ type identity struct {
 
 func newIdentity(cert *sm2.Certificate, pk bccsp.Key, msp *bccspmsp) (Identity, error) {
 	if mspIdentityLogger.IsEnabledFor(zapcore.DebugLevel) {
-		mspIdentityLogger.Debugf("Creating identity instance for cert %s", certToPEM(cert))
+		mspIdentityLogger.Debugf("\nCreating identity instance for cert %s\n", certToPEM(cert))
 	}
 
 	// Sanitize first the certificate
@@ -67,7 +67,8 @@ func newIdentity(cert *sm2.Certificate, pk bccsp.Key, msp *bccspmsp) (Identity, 
 	id := &IdentityIdentifier{
 		Mspid: msp.name,
 		Id:    hex.EncodeToString(digest)}
-
+	//add liuhy
+	mspIdentityLogger.Debugf("\nMspid:%s %v\n", msp.name, cert.Subject)
 	return &identity{id: id, cert: cert, pk: pk, msp: msp}, nil
 }
 

@@ -115,7 +115,7 @@ func (ks *fileBasedKeyStore) GetKey(ski []byte) (k bccsp.Key, err error) {
 	}
 
 	suffix := ks.getSuffix(hex.EncodeToString(ski))
-
+	fmt.Println("suffix=======================", suffix)
 	switch suffix {
 	case "key":
 		// Load the key
