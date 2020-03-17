@@ -115,12 +115,14 @@ func GenerateLocalMSP(baseDir, name string, sans []string, signCA *ca.CA,
 	// cleared up anyway by copyAdminCert, but
 	// we leave a valid admin for now for the sake
 	// of unit tests
-	if !nodeOUs {
+	//if !nodeOUs {
+	if nodeType == ADMIN {
 		err = x509Export(filepath.Join(mspDir, "admincerts", x509Filename(name)), cert)
 		if err != nil {
 			return err
 		}
 	}
+	//}
 
 	/*
 		Generate the TLS artifacts in the TLS folder
