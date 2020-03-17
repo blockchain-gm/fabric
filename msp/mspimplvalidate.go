@@ -8,6 +8,7 @@ package msp
 
 import (
 	"bytes"
+	"fmt"
 
 	"time"
 
@@ -177,6 +178,8 @@ func (msp *bccspmsp) validateIdentityOUsV11(id *identity) error {
 	// used to tell apart clients or peers.
 	counter := 0
 	for _, OU := range id.GetOrganizationalUnits() {
+		fmt.Println("\nOU===========1", string(OU.CertifiersIdentifier))
+		fmt.Println("\nOU===========2", OU.OrganizationalUnitIdentifier)
 		// Is OU.OrganizationalUnitIdentifier one of the special OUs?
 		var nodeOU *OUIdentifier
 		switch OU.OrganizationalUnitIdentifier {
@@ -193,11 +196,13 @@ func (msp *bccspmsp) validateIdentityOUsV11(id *identity) error {
 		if len(nodeOU.CertifiersIdentifier) != 0 && !bytes.Equal(nodeOU.CertifiersIdentifier, OU.CertifiersIdentifier) {
 			return errors.Errorf("certifiersIdentifier does not match: [%v], MSP: [%s]", id.GetOrganizationalUnits(), msp.name)
 		}
+		fmt.Println("counter =================", counter)
 		counter++
 		if counter > 1 {
 			break
 		}
 	}
+	fmt.Println("counter =================2 ", counter)
 	if counter != 1 {
 		return errors.Errorf("the identity must be a client or a peer identity to be valid, not a combination of them. OUs: [%v], MSP: [%s]", id.GetOrganizationalUnits(), msp.name)
 	}

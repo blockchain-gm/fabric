@@ -7,11 +7,11 @@ SPDX-License-Identifier: Apache-2.0
 package msp
 
 import (
-	"fmt"
 	"crypto"
 	"crypto/rand"
 	"encoding/hex"
 	"encoding/pem"
+	"fmt"
 	"time"
 
 	"github.com/golang/protobuf/proto"
@@ -19,8 +19,8 @@ import (
 	"github.com/hyperledger/fabric/common/flogging"
 	"github.com/hyperledger/fabric/protos/msp"
 	"github.com/pkg/errors"
-	"go.uber.org/zap/zapcore"
 	"github.com/tjfoc/gmsm/sm2"
+	"go.uber.org/zap/zapcore"
 )
 
 var mspIdentityLogger = flogging.MustGetLogger("msp.identity")
@@ -102,12 +102,14 @@ func (id *identity) GetOrganizationalUnits() []*OUIdentifier {
 		return nil
 	}
 
+	//	fmt.Println("id============", id)
 	cid, err := id.msp.getCertificationChainIdentifier(id)
 	if err != nil {
 		mspIdentityLogger.Errorf("Failed getting certification chain identifier for [%v]: [%+v]", id, err)
 
 		return nil
 	}
+	//fmt.Println("cid============", string(cid))
 
 	res := []*OUIdentifier{}
 	for _, unit := range id.cert.Subject.OrganizationalUnit {
@@ -115,6 +117,9 @@ func (id *identity) GetOrganizationalUnits() []*OUIdentifier {
 			OrganizationalUnitIdentifier: unit,
 			CertifiersIdentifier:         cid,
 		})
+		fmt.Println()
+		fmt.Println("unit==========1", (unit))
+		fmt.Println("unit==========2", string(cid))
 	}
 
 	return res
