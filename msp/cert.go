@@ -89,7 +89,14 @@ func sanitizeECDSASignedCert(cert *sm2.Certificate, parentCert *sm2.Certificate)
 	}
 
 	// expectedSig, err := utils.SignatureToLowS(parentCert.PublicKey.(*ecdsa.PublicKey), cert.Signature)
-	expectedSig, err := gm.SignatureToLowS(parentCert.PublicKey.(*ecdsa.PublicKey), cert.Signature)
+	var oldK *sm2.PublicKey
+	var newK ecdsa.PublicKey
+	oldK = parentCert.PublicKey.(*sm2.PublicKey)
+	newK.Curve = oldK.Curve
+	newK.X = oldK.X
+	newK.Y = oldK.Y
+
+	expectedSig, err := gm.SignatureToLowS(&newK, cert.Signature)
 	if err != nil {
 		return nil, err
 	}
