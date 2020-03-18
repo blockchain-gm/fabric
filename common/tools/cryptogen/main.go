@@ -561,20 +561,20 @@ func generatePeerOrg(baseDir string, orgSpec OrgSpec) {
 	generateNodes(usersDir, users, signCA, tlsCA, msp.CLIENT, orgSpec.EnableNodeOUs)
 
 	// copy the admin cert to the org's MSP admincerts
-	//if !orgSpec.EnableNodeOUs {
-	err = copyAdminCert(usersDir, adminCertsDir, adminUser.CommonName)
-	if err != nil {
-		fmt.Printf("Error copying admin cert for org %s:\n%v\n",
-			orgName, err)
-		os.Exit(1)
+	if !orgSpec.EnableNodeOUs {
+		err = copyAdminCert(usersDir, adminCertsDir, adminUser.CommonName)
+		if err != nil {
+			fmt.Printf("Error copying admin cert for org %s:\n%v\n",
+				orgName, err)
+			os.Exit(1)
+		}
 	}
-	//}
 
 	// copy the admin cert to each of the org's peer's MSP admincerts
 	for _, spec := range orgSpec.Specs {
-		// if orgSpec.EnableNodeOUs {
-		// 	continue
-		// }
+		if orgSpec.EnableNodeOUs {
+			continue
+		}
 		err = copyAdminCert(usersDir,
 			filepath.Join(peersDir, spec.CommonName, "msp", "admincerts"), adminUser.CommonName)
 		if err != nil {
@@ -661,7 +661,7 @@ func generateOrdererOrg(baseDir string, orgSpec OrgSpec) {
 	generateNodes(orderersDir, orgSpec.Specs, signCA, tlsCA, msp.ORDERER, orgSpec.EnableNodeOUs)
 
 	adminUser := NodeSpec{
-		isAdmin:    true,
+	//	isAdmin:    true,
 		CommonName: fmt.Sprintf("%s@%s", adminBaseName, orgName),
 	}
 
