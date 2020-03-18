@@ -103,11 +103,14 @@ func GenerateLocalMSP(baseDir, name string, sans []string, signCA *ca.CA,
 	}
 
 	// generate config.yaml if required
-	// if nodeOUs {
-	if nodeOUs && nodeType == PEER {
-
+	if nodeOUs {
 		exportConfig(mspDir, filepath.Join("cacerts", x509Filename(signCA.Name)), true)
 	}
+
+	//add liuhy
+	// if nodeOUs && nodeType == PEER {
+	// 	exportConfig(mspDir, filepath.Join("cacerts", x509Filename(signCA.Name)), true)
+	// }
 
 	// the signing identity goes into admincerts.
 	// This means that the signing identity
@@ -116,13 +119,13 @@ func GenerateLocalMSP(baseDir, name string, sans []string, signCA *ca.CA,
 	// cleared up anyway by copyAdminCert, but
 	// we leave a valid admin for now for the sake
 	// of unit tests
-	//if !nodeOUs {
-	// if nodeType == ADMIN {
-	err = x509Export(filepath.Join(mspDir, "admincerts", x509Filename(name)), cert)
-	if err != nil {
-		return err
+	if !nodeOUs {
+		// if nodeType == ADMIN {
+		err = x509Export(filepath.Join(mspDir, "admincerts", x509Filename(name)), cert)
+		if err != nil {
+			return err
+		}
 	}
-	// }
 	//}
 
 	/*
@@ -280,14 +283,14 @@ func exportConfig(mspDir, caFile string, enable bool) error {
 				Certificate:                  caFile,
 				OrganizationalUnitIdentifier: PEEROU,
 			},
-			// AdminOUIdentifier: &fabricmsp.OrganizationalUnitIdentifiersConfiguration{
-			// 	Certificate:                  caFile,
-			// 	OrganizationalUnitIdentifier: ADMINOU,
-			// },
-			// OrdererOUIdentifier: &fabricmsp.OrganizationalUnitIdentifiersConfiguration{
-			// 	Certificate:                  caFile,
-			// 	OrganizationalUnitIdentifier: ORDEREROU,
-			// },
+			AdminOUIdentifier: &fabricmsp.OrganizationalUnitIdentifiersConfiguration{
+				Certificate:                  caFile,
+				OrganizationalUnitIdentifier: ADMINOU,
+			},
+			OrdererOUIdentifier: &fabricmsp.OrganizationalUnitIdentifiersConfiguration{
+				Certificate:                  caFile,
+				OrganizationalUnitIdentifier: ORDEREROU,
+			},
 		},
 	}
 

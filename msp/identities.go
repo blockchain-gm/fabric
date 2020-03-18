@@ -68,7 +68,7 @@ func newIdentity(cert *sm2.Certificate, pk bccsp.Key, msp *bccspmsp) (Identity, 
 		Mspid: msp.name,
 		Id:    hex.EncodeToString(digest)}
 	//add liuhy
-	mspIdentityLogger.Debugf("\nMspid:%s %v\n", msp.name, cert.Subject)
+	mspIdentityLogger.Debugf("\n===>Mspid:%s %v\n", msp.name, cert.Subject)
 	return &identity{id: id, cert: cert, pk: pk, msp: msp}, nil
 }
 
