@@ -44,10 +44,14 @@
 #   - docker-tag-stable - re-tags the images made by 'make docker' with the :stable tag
 #   - help-docs - generate the command reference docs
 
-BASE_VERSION = 1.4.7
-PREV_VERSION = 1.4.6
+# BASE_VERSION = 1.4.7
+# PREV_VERSION = 1.4.6
+# CHAINTOOL_RELEASE=1.1.3
+# BASEIMAGE_RELEASE=0.4.18
+BASE_VERSION = 1.4.3
+PREV_VERSION = 1.4.2
 CHAINTOOL_RELEASE=1.1.3
-BASEIMAGE_RELEASE=0.4.18
+BASEIMAGE_RELEASE=0.4.15
 
 # Allow to build as a submodule setting the main project to
 # the PROJECT_NAME env variable, for example,
@@ -222,7 +226,7 @@ generate-metrics-doc: buildenv
 $(BUILD_DIR)/%/chaintool: Makefile
 	@echo "Installing chaintool"
 	@mkdir -p $(@D)
-	curl -fL $(CHAINTOOL_URL) > $@
+	#del temp#curl -fL $(CHAINTOOL_URL) > $@
 	chmod +x $@
 
 # We (re)build a package within a docker context but persist the $GOPATH/pkg

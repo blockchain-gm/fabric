@@ -514,6 +514,8 @@ func (goPlatform *Platform) GenerateDockerBuild(path string, code []byte, tw *ta
 		InputStream:  codepackage,
 		OutputStream: binpackage,
 	})
+	fmt.Println("goang build:", err)
+	fmt.Println(fmt.Sprintf("GOPATH=/chaincode/input:$GOPATH go build  %s -o /chaincode/output/chaincode %s", ldflagsOpt, pkgname))
 	if err != nil {
 		return err
 	}

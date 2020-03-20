@@ -7,6 +7,7 @@ SPDX-License-Identifier: Apache-2.0
 package chaincode
 
 import (
+	"fmt"
 	"strconv"
 	"time"
 
@@ -60,6 +61,7 @@ func (r *RuntimeLauncher) Launch(ccci *ccprovider.ChaincodeContainerInfo) error 
 			if err != nil {
 				launchState.Notify(errors.Wrap(err, "failed to wait on container exit"))
 			}
+			fmt.Println("wait ===================vm", err)
 			launchState.Notify(errors.Errorf("container exited with %d", exitCode))
 		}()
 	}

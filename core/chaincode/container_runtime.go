@@ -118,11 +118,13 @@ func (c *ContainerRuntime) Wait(ccci *ccprovider.ChaincodeContainerInfo) (int, e
 		},
 	}
 
+	fmt.Println("ContainerRuntime wait ......................")
 	if err := c.Processor.Process(ccci.ContainerType, wcr); err != nil {
+		fmt.Println("ContainerRuntime wait ......................", err)
 		return -1, err
 	}
 	r := <-resultCh
-
+	fmt.Println("ContainerRuntime wait ......................", r.exitCode, r.err)
 	return r.exitCode, r.err
 }
 

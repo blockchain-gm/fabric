@@ -81,9 +81,12 @@ var streamGetter peerStreamGetter
 //the non-mock user CC stream establishment func
 func userChaincodeStreamGetter(name string) (PeerChaincodeStream, error) {
 	flag.StringVar(&peerAddress, "peer.address", "", "peer address")
+	chaincodeLogger.Debug("peer.tls.enabled======")
 	if viper.GetBool("peer.tls.enabled") {
 		keyPath := viper.GetString("tls.client.key.path")
 		certPath := viper.GetString("tls.client.cert.path")
+		chaincodeLogger.Debugf("keyPath======%s", keyPath)
+		chaincodeLogger.Debugf("certPath======%s", certPath)
 
 		data, err1 := ioutil.ReadFile(keyPath)
 		if err1 != nil {
