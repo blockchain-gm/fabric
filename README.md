@@ -21,6 +21,8 @@ make cryptogen
 
 至此，二进制fabric编译完成
 
+分支同步：
+git push --mirror git@github.com:blockchain-gm/fabric.git
 
 ```
 
